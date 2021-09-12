@@ -1,0 +1,3 @@
+# To-Dos
+1. Templating.
+2. Hooks for `poetry`, `npm`...

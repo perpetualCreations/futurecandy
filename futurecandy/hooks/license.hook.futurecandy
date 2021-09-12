@@ -1,0 +1,7 @@
+[meta]
+name = "LICENSE"
+description = "Hook for generating LICENSE files."
+
+[exec]
+script = "python -m futurecandy.hooks.License {}"
+want_path = True
