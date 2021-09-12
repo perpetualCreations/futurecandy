@@ -3,6 +3,8 @@
 
 Linux utility for launching projects in a single command.
 
+Install with `pip install futurecandy`.
+
 Run with `python -m futurecandy` or add a command alias to your shell RC file with `python -m futurecandy.extra` to run with command `futurecandy`.
 
 futurecandy will create directory `.futurecandy` in the user's home directory.
