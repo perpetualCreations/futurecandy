@@ -1,0 +1,7 @@
+[meta]
+name = "VENV"
+description = "Hook for initializing a Python virtual environment."
+
+[exec]
+script = "python -m futurecandy.hooks.Venv {}"
+want_path = True
