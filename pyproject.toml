@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "futurecandy"
-version = "1.0"
+version = "1.1"
 description = "Project initialization utility for Linux."
 authors = ["perpetualCreations <tchen0584@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://dreamerslegacy.xyz/"
+repository = "https://dreamerslegacy.xyz/git/perpetualCreations/futurecandy"
 
 [tool.poetry.dependencies]
 python = "^3.9"

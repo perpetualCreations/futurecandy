@@ -9,8 +9,9 @@ from ast import literal_eval
 from subprocess import Popen
 import enquiries
 
-__version__ = "1.0"
+__version__ = "1.1"
 
+print("><=><")
 print("futurecandy, v" + __version__)
 
 home = path.join(path.expanduser("~"), ".futurecandy/")

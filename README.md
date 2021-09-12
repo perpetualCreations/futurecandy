@@ -1,4 +1,6 @@
 # futurecandy
+`><=><`
+
 Linux utility for launching projects in a single command.
 
 Run with `python -m futurecandy` or add a command alias to your shell RC file with `python -m futurecandy.extra` to run with command `futurecandy`.
