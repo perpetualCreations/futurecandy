@@ -3,12 +3,12 @@
 import configparser
 from sys import argv
 from string import Template
-from os.path import join
+from os.path import join, expanduser
 from os import system
 import enquiries
 
 config = configparser.ConfigParser()
-config.read("~/.futurecandy/candy.cfg")
+config.read(join(expanduser("~"), ".futurecandy/candy.cfg"))
 
 LICENSES = {
     "Closed": Template("Copyright (C) $year, $entity\nAll rights reserved."),

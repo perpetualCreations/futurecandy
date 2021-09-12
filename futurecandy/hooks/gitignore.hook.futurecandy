@@ -1,0 +1,7 @@
+[meta]
+name = ".gitignore"
+description = "Hook for generating .gitignore."
+
+[exec]
+script = "python -m futurecandy.hooks.Gitignore {}"
+want_path = True

@@ -14,19 +14,21 @@ __version__ = "1.0"
 
 print("futurecandy, v" + __version__)
 
-if not path.isfile("~/.futurecandy/candy.cfg"):
+home = path.join(path.expanduser("~"), ".futurecandy/")
+
+if not path.isfile(home + "candy.cfg"):
     print("Missing user configurations, creating...")
-    mkdir("~/.futurecandy")
-    mkdir("~/.futurecandy/hooks")
-    copy(path.join(path.abspath(path.dirname(__file__)), "candy.cfg"),
-         "~/.futurecandy/")
-    for hook in scandir(path.join(path.abspath(path.dirname(__file__)),
-                                  "hooks")):
-        copy(hook.path, "~/.futurecandy/hooks/")
+    mkdir(home)
+    mkdir(home + "hooks")
+    copy(path.join(path.abspath(path.dirname(__file__)), "candy.cfg"), home)
+    for hook in [x for x in scandir(path.join(path.abspath(
+            path.dirname(__file__)), "hooks")) if x.path.endswith(
+                ".hook.futurecandy")]:
+        copy(hook.path, home + "hooks/")
     print("Done, created directory ~/.futurecandy with base configurations.")
 
 config = configparser.ConfigParser()
-config.read("~/.futurecandy/candy.cfg")
+config.read(home + "candy.cfg")
 arg_parse = argparse.ArgumentParser(
     description="Project initialization utility for Linux.")
 arg_parse.add_argument(
@@ -52,17 +54,16 @@ if not path.isdir(parent_path):
 
 name = enquiries.freetext("Specify project name: ")
 
-project_path = path.join(parent_path, name)
+project_path = path.join(parent_path, name).replace("~/", path.join(
+    path.expanduser("~"), ""))
 
 mkdir(project_path)
 
 # probably needs more error handling
-hook_files = list(scandir("~/.futurecandy/hooks"))
+hook_files = list(scandir(home + "hooks"))
 hooks = {}
 for file in hook_files:
-    extensions = file.name.split(".")
-    if extensions[len(extensions) - 1] != "futurecandy" or \
-            extensions[len(extensions) - 2] != "hook":
+    if not file.path.endswith(".hook.futurecandy"):
         continue
     hook_config = configparser.ConfigParser()
     hook_config.read(file.path)
