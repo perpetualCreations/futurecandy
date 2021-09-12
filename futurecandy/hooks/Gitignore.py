@@ -4,6 +4,7 @@ import logging
 from os.path import isfile
 import requests
 import enquiries
+from sys import argv
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 
@@ -21,23 +22,26 @@ except requests.exceptions.HTTPError as err:
 templates = [line for line in r.text.splitlines()]
 logging.debug(templates)
 
-try:
-    parameter = prompt("Enter .gitignore templates, separated with "
-                       "spaces: ", completer=WordCompleter(templates),
-                       complete_while_typing=True).split()
-except KeyboardInterrupt:
-    quit()
-
-logging.info(parameter)
-
-if not parameter:
-    print("No templates selected, exiting.")
-    quit()
-
-for param in parameter:
-    if param not in templates:
-        print(f".gitignore template \"{param}\" is not a valid template.")
+while True:
+    try:
+        parameter = prompt("Enter .gitignore templates, separated with "
+                           "spaces: ", completer=WordCompleter(templates),
+                           complete_while_typing=True).split()
+    except KeyboardInterrupt:
         quit()
+
+    logging.info(parameter)
+
+    if not parameter and enquiries.confirm("No templates selected, exit?"):
+        print("Exiting.")
+        quit()
+
+    for param in parameter:
+        if param not in templates:
+            print(f".gitignore template \"{param}\" is not a valid template.")
+            continue
+
+    break
 
 r = requests.get(f"https://www.gitignore.io/api/{','.join(parameter)}")
 try:
@@ -47,16 +51,15 @@ except requests.exceptions.HTTPError as err:
     quit()
 
 lookup = {
-    "Append templates.": lambda: open(".gitignore", "a").write(r.text),
+    "Append templates.": lambda: open(argv[1] + ".gitignore", "a").write(
+        r.text),
     "Overwrite with templates.": lambda: open(
-        ".gitignore", "w").write(r.text),
+        argv[1] + ".gitignore", "w").write(r.text),
     "Quit.": lambda: quit()
 }
 
-if isfile(".gitignore"):
+if isfile(argv[1] + ".gitignore"):
     enquiries.choose(".gitignore already exists.", lookup.keys())()
 else:
-    with open(".gitignore", "w") as file_handle:
+    with open(argv[1] + ".gitignore", "w") as file_handle:
         file_handle.write(r.text)
-
-print("Hook complete.")

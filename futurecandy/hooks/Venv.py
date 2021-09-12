@@ -3,6 +3,4 @@
 from os import system, path
 from sys import argv
 
-system("pythom -m venv " + path.join(argv[0], ".venv"))
-
-print("Hook complete.")
+system("python -m venv " + path.join(argv[1], ".venv"))

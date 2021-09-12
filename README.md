@@ -3,8 +3,6 @@ Linux utility for launching projects in a single command.
 
 Run with `python -m futurecandy` or add a command alias to your shell RC file with `python -m futurecandy.extra` to run with command `futurecandy`.
 
-Specify `manual` after as an argument to run with more manual control instead of relying on configuration files.
-
 futurecandy will create directory `.futurecandy` in the user's home directory.
 Edit configuration files and hooks there.
 

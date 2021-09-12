@@ -5,6 +5,7 @@ from sys import argv
 from string import Template
 from os.path import join, expanduser
 from os import system
+from ast import literal_eval
 import enquiries
 
 config = configparser.ConfigParser()
@@ -47,12 +48,11 @@ limitations under the License.""")
 }
 
 if enquiries.confirm("Use template LICENSE?"):
-    with open(join(argv[0], "LICENSE"), "w") as license_handle:
+    with open(join(argv[1], "LICENSE"), "w") as license_handle:
         license_handle.write(LICENSES[enquiries.choose(
             "Specify license: ", LICENSES.keys())].substitute({
                 "year": "", "entity": enquiries.freetext(
                     "Specify copyright holder: ")}))
 else:
-    system(config["editors"]["light"] + " " + join(argv[0], "LICENSE"))
-
-print("Hook complete.")
+    system(literal_eval(config["editors"]["light"]) + " " +
+           join(argv[1], "LICENSE"))
