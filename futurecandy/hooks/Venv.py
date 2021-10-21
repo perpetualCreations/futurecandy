@@ -3,4 +3,4 @@
 from os import system, path
 from sys import argv
 
-system("python -m venv " + path.join(argv[1], ".venv"))
+system("python3 -m venv " + path.join(argv[1], ".venv"))

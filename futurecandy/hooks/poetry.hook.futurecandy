@@ -1,0 +1,8 @@
+[meta]
+name = "Poetry"
+description = "Hook for initializing directory with Poetry Python packaging and dependency management."
+
+[exec]
+script = "poetry about && cd {} && poetry init"
+want_path = True
+check_bin = True

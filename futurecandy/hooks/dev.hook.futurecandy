@@ -1,0 +1,8 @@
+[meta]
+name = "Unsafe"
+description = "Unsafe hook specifically for testing command checking by very scientific means."
+
+[exec]
+script = "jfkdjkjkljfdghdfsjnbvjndjnbjndhbnjuhnfjweurnjdsngjkfdnmbkjfdgjkblkdsjgkdsrfngldfkfgjfkdsng {}"
+want_path = True
+check_bin = True

@@ -8,8 +8,9 @@ from copy import deepcopy
 from ast import literal_eval
 from subprocess import Popen
 import enquiries
+from futurecandy.hooks.Safe import check
 
-__version__ = "1.1"
+__version__ = "1.2"
 
 print("><=><")
 print("futurecandy, v" + __version__)
@@ -72,6 +73,15 @@ for queued in hooks_to_run:
     command = literal_eval(hooks[queued]["exec"]["script"])
     if literal_eval(hooks[queued]["exec"]["want_path"]):
         command = command.format(path.join(project_path, ""))
+    if literal_eval(hooks[queued]["exec"]["check_bin"]):
+        state = -1
+        while True:
+            state = check(command.split(" ")[0])
+            if state in [0, 1]:
+                break
+        if state == 1:
+            print("Skipping hook.")
+            continue
     system(command)
     print("Hook complete.")
 

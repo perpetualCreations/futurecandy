@@ -3,5 +3,6 @@ name = ".gitignore"
 description = "Hook for generating .gitignore."
 
 [exec]
-script = "python -m futurecandy.hooks.Gitignore {}"
+script = "python3 -m futurecandy.hooks.Gitignore {}"
 want_path = True
+check_bin = False

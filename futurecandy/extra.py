@@ -13,5 +13,5 @@ KEY = {
 with open(KEY[enquiries.choose(
         "Pick RC file for command alias to be written to: ", KEY.keys())](),
           "a") as export_handle:
-    export_handle.write("\nalias futurecandy='python -m futurecandy'")
-    export_handle.write("\nalias futurecandyrc='python -m futurecandy.extra'")
+    export_handle.write("\nalias futurecandy='python3 -m futurecandy'")
+    export_handle.write("\nalias futurecandyrc='python3 -m futurecandy.extra'")
