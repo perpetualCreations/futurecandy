@@ -40,13 +40,13 @@ def update_hooks():
         elif state == 1:
             print("Unsafe to update hooks, Git missing.")
             return
-    if system("git status ~/.futurecandy/bases") != 0:
+    if system("git -C ~/.futurecandy/bases status") != 0:
         system("git clone https://dreamerslegacy.xyz/git/perpetualCreations/"
                "futurecandy-hooks ~/.futurecandy/bases")
-    system("git pull ~/.futurecandy/bases")
+    system("git -C ~/.futurecandy/bases pull")
     # /dev/null output redirect shouldn't cause issues. shouldn't.
-    system("ln -s ~/.futurecandy/bases/*.hook.futurecandy"
-           "~/.futurecandy/hooks > /dev/null")
+    system("ln -s ~/.futurecandy/bases/*.hook.futurecandy "
+           "~/.futurecandy/hooks/ > /dev/null")
     print("Done fetching hooks.")
 
 
@@ -64,14 +64,14 @@ if not path.isfile(home + "candy.cfg"):
     print("Missing user configurations, creating...")
     mkdir(home)
     mkdir(home + "hooks")
-    mkdir(home + "base")
+    mkdir(home + "bases")
     copy(path.join(path.abspath(path.dirname(__file__)), "candy.cfg"), home)
     if enquiries.confirm("Fetch base hooks?"):
         update_hooks()
     print("Done, created directory ~/.futurecandy with base configurations.")
 
 try:
-    extras[argv[1]]
+    extras[argv[1]]()
 except KeyError:
     print("Invalid argument.")
     exit(1)
