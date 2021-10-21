@@ -1,8 +1,0 @@
-[meta]
-name = "LICENSE"
-description = "Hook for generating LICENSE files."
-
-[exec]
-script = "python3 -m futurecandy.hooks.License {}"
-want_path = True
-check_bin = False

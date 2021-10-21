@@ -1,8 +1,0 @@
-[meta]
-name = "Git"
-description = "Hook for initializing Git and adding remotes."
-
-[exec]
-script = "python3 -m futurecandy.hooks.Git {}"
-want_path = True
-check_bin = False

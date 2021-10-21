@@ -5,10 +5,12 @@ Linux utility for launching projects in a single command.
 
 Install with `pip install futurecandy`.
 
-Run with `python3 -m futurecandy` or add a command alias to your shell RC file with `python3 -m futurecandy.extra` to run with command `futurecandy`.
+Run with `python3 -m futurecandy` or add a command alias to your shell RC file with `python3 -m futurecandy rc` to run with command `futurecandy`.
 
 futurecandy will create directory `.futurecandy` in the user's home directory.
 Edit configuration files and hooks there.
+
+Run `python3 -m futurecandy update` or `futurecandy update` to fetch base hooks.
 
 ## Hooks
 Users may add their own hooks, by creating a file in directory `~/.futurecandy/hook`, with file extension `.hook.futurecandy`.

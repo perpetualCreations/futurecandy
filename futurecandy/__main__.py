@@ -7,6 +7,7 @@ from shutil import copy2 as copy
 from copy import deepcopy
 from ast import literal_eval
 from subprocess import Popen
+from sys import argv
 import enquiries
 from futurecandy.hooks.Safe import check
 
@@ -15,18 +16,67 @@ __version__ = "1.2"
 print("><=><")
 print("futurecandy, v" + __version__)
 
+
+def make_rc_file():
+    """Create RC file for command alias."""
+    KEY = {
+        "Bash (~/.bashrc)": lambda: path.join(path.expanduser("~"), ".bashrc"),
+        "ZSH (~/.zshrc)": lambda: path.join(path.expanduser("~"), ".zshrc"),
+        "Use ~/.profile": lambda: path.join(path.expanduser("~"), ".profile"),
+        "Custom": lambda: enquiries.freetext("Specify path to file: ")
+    }
+    with open(KEY[
+        enquiries.choose("Pick RC file for command alias to be written to: ",
+                         KEY.keys())](), "a") as export_handle:
+        export_handle.write("\nalias futurecandy='python3 -m futurecandy'")
+
+
+def update_hooks():
+    """Update base hooks via Git."""
+    while True:
+        state = check("git")
+        if state == 0:
+            break
+        elif state == 1:
+            print("Unsafe to update hooks, Git missing.")
+            return
+    if system("git status ~/.futurecandy/bases") != 0:
+        system("git clone https://dreamerslegacy.xyz/git/perpetualCreations/"
+               "futurecandy-hooks ~/.futurecandy/bases")
+    system("git pull ~/.futurecandy/bases")
+    # /dev/null output redirect shouldn't cause issues. shouldn't.
+    system("ln -s ~/.futurecandy/bases/*.hook.futurecandy"
+           "~/.futurecandy/hooks > /dev/null")
+    print("Done fetching hooks.")
+
+
+extras = {
+    "rc": lambda: make_rc_file(),
+    "update": lambda: update_hooks(),
+    "help": lambda: print("Run to generate project via hooks, supply \"rc\" "
+                          "for creating command aliases in shell RC file, and "
+                          "\"update\" to fetch base hooks.")
+}
+
 home = path.join(path.expanduser("~"), ".futurecandy/")
 
 if not path.isfile(home + "candy.cfg"):
     print("Missing user configurations, creating...")
     mkdir(home)
     mkdir(home + "hooks")
+    mkdir(home + "base")
     copy(path.join(path.abspath(path.dirname(__file__)), "candy.cfg"), home)
-    for hook in [x for x in scandir(path.join(path.abspath(
-            path.dirname(__file__)), "hooks")) if x.path.endswith(
-                ".hook.futurecandy")]:
-        copy(hook.path, home + "hooks/")
+    if enquiries.confirm("Fetch base hooks?"):
+        update_hooks()
     print("Done, created directory ~/.futurecandy with base configurations.")
+
+try:
+    extras[argv[1]]
+except KeyError:
+    print("Invalid argument.")
+    exit(1)
+except IndexError:
+    print("Running project generation.")
 
 config = configparser.ConfigParser()
 config.read(home + "candy.cfg")
