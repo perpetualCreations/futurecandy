@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "futurecandy"
-version = "1.2"
+version = "1.2.1"
 description = "Project initialization utility for Linux."
 authors = ["perpetualCreations <tchen0584@gmail.com>"]
 license = "MIT"

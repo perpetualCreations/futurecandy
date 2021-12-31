@@ -6,6 +6,7 @@ from string import Template
 from os.path import join, expanduser
 from os import system
 from ast import literal_eval
+from datetime import date
 import enquiries
 
 config = configparser.ConfigParser()
@@ -14,7 +15,7 @@ config.read(join(expanduser("~"), ".futurecandy/candy.cfg"))
 LICENSES = {
     "Closed": Template("Copyright (C) $year, $entity\nAll rights reserved."),
     "MIT": Template(
-        "Copyright $year $entity\n\nPermission is hereby granted, free of"
+        "Copyright (C) $year $entity\n\nPermission is hereby granted, free of"
         " charge, to any person obtaining a copy of this software and "
         "associated documentation files " """(the "Software")""" ", to "
         "deal in the Software without restriction, including without "
@@ -51,7 +52,7 @@ if enquiries.confirm("Use template LICENSE?"):
     with open(join(argv[1], "LICENSE"), "w") as license_handle:
         license_handle.write(LICENSES[enquiries.choose(
             "Specify license: ", LICENSES.keys())].substitute({
-                "year": "", "entity": enquiries.freetext(
+                "year": str(date.today().year), "entity": enquiries.freetext(
                     "Specify copyright holder: ")}))
 else:
     system(literal_eval(config["editors"]["light"]) + " " +
