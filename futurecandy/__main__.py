@@ -11,7 +11,7 @@ from sys import argv
 import enquiries
 from futurecandy.hooks.Safe import check
 
-__version__ = "1.2"
+__version__ = "1.2.1"
 
 print("><=><")
 print("futurecandy, v" + __version__)

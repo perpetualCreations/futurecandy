@@ -37,7 +37,7 @@ To specify the path to the project directory for the command, include `{}` as a 
 If `check_bin` is true, futurecandy will split the `script` string by spaces into an array, then extract the first element as the script command for validation. If the "command" does not exist, the user will enter the shell to rectify the situation, before the command is re-ran.
 
 ## Updating
-Update the package through PIP, then remove and regenerate `~/.futurecandy/`.
+Update the package through PIP via `pip install --upgrade futurecandy`. If breaking changes are made, and your installation fails to run, uninstall and remove `~/.futurecandy`, then install the package again.
 
 ## Acknowledgements
 `gitignore.hook.futurecandy` based off of [perpetualCreations/auto-gitignore](https://github.com/perpetualCreations/auto-gitignore) forked from [Mux-Mastermann/auto-gitignore](https://github.com/Mux-Mastermann/auto-gitignore).
